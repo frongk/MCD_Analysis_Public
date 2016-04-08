@@ -37,6 +37,9 @@ cList <- split(c(as.matrix(cancLGF[,1:10])),
                  as.vector(row.names(cancLG))) #rownames of cancLG is transaction basket
                  #(parenthesis above might not make sense if you don't know split fun)
 
+rm(cancLG)
+rm(cancLGF)
+
 #remove duplicates function for lapply
 rmDuplNA <- function(inList){
   idx <- duplicated(inList)
@@ -51,7 +54,7 @@ cancTrans <- as(cList,"transactions")
 tic()
 rules <- apriori(
   cancTrans, 
-  parameter=list(supp=0.00002, conf=0.8, target="rules", minlen=6, maxlen=7)
+  parameter=list(supp=0.00002, conf=0.8, target="rules", minlen=3, maxlen=5)
 )
 
 rules <- sort(rules, by ="lift")
